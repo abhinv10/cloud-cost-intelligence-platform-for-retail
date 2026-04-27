@@ -50,25 +50,23 @@ if uploaded_file:
     col2.metric("Average Cost ($)", f"{avg_cost:.2f}")
     col3.metric("Highest Cost Service", max_service["Service"])
 
-    # ===============================
-    # Bar Chart - Total Cost
+   # ===============================
+    # 📊 Total Cost Chart
     # ===============================
     st.subheader("📊 Cost Distribution")
 
     fig1, ax1 = plt.subplots()
     ax1.bar(df["Service"], df["Total_Cost"])
-    ax1.set_xlabel("Services")
-    ax1.set_ylabel("Cost ($)")
     ax1.set_title("Total Cost per Service")
 
     st.pyplot(fig1)
 
     # ===============================
-    # Weekly vs Monthly Comparison
+    # 📊 Weekly vs Monthly
     # ===============================
-    st.subheader("📊 Weekly vs Monthly Cost Comparison")
+    st.subheader("📊 Weekly vs Monthly Comparison")
 
-    x = range(len(df["Service"]))
+    x = list(range(len(df)))
 
     fig2, ax2 = plt.subplots()
     ax2.bar(x, df["Weekly_Cost"], width=0.4, label="Weekly")
@@ -76,34 +74,23 @@ if uploaded_file:
 
     ax2.set_xticks([i + 0.2 for i in x])
     ax2.set_xticklabels(df["Service"])
-    ax2.set_xlabel("Services")
-    ax2.set_ylabel("Cost ($)")
-    ax2.set_title("Weekly vs Monthly Cost")
     ax2.legend()
 
     st.pyplot(fig2)
 
     # ===============================
-    # Daily Cost Trend (LINE CHART 🔥)
+    # 📈 Daily Trend
     # ===============================
-    st.subheader("📈 Daily Cost Trend (Estimated)")
+    st.subheader("📈 Daily Cost Trend")
 
-    # Simulate 30 days
     days = list(range(1, 31))
-
-    # Total daily cost trend (sum across services)
     daily_total = df["Daily_Cost"].sum()
-
-    daily_values = [daily_total for _ in days]
+    daily_values = [daily_total] * 30
 
     fig3, ax3 = plt.subplots()
     ax3.plot(days, daily_values, marker='o')
-    ax3.set_xlabel("Days")
-    ax3.set_ylabel("Cost ($)")
-    ax3.set_title("Estimated Daily Cloud Cost Trend")
 
     st.pyplot(fig3)
-
     # ===============================
     # Sorted Table
     # ===============================
